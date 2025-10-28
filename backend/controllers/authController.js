@@ -12,21 +12,21 @@ const registerUser = async (req, res) => {
 
     // Automatically assign admin if it’s the first registered user
     const isFirstUser = (await User.countDocuments()) === 0;
-
+    const assignedRole = isFirstUser ? 'admin' : role || 'student';
     // create a new user
     const user = await User.create({
       name,
       email,
       password,
-      isAdmin: isFirstUser, // true only for first user
+      role: assignedRole,
     });
 
     res.status(201).json({
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin,
-      token: generateToken(user._id, user.isAdmin ? "admin" : "user"),
+      role: user.role,
+      token: generateToken(user._id, user.role),
     });
   } catch (err) {
     console.error(err);
@@ -43,13 +43,14 @@ const loginUser = async (req, res) => {
     if (!user)
       return res.status(400).json({ message: "Invalid Credentials" });
 
+    // Check password, this function is defined in User model
     if (await user.matchPassword(password)) {
       res.json({
         _id: user._id,
         name: user.name,
         email: user.email,
-        isAdmin: user.isAdmin,
-        token: generateToken(user._id, user.isAdmin ? "admin" : "user"),
+        role: user.role,
+        token: generateToken(user._id, user.role),
       });
     } else {
       return res.status(400).json({ message: "Invalid Credentials" });

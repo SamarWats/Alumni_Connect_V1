@@ -6,11 +6,12 @@ const userSchema = new mongoose.Schema(
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
-    isAdmin: { type: Boolean, required: true, default: false },
-    skills: { type: [String], default: [] },
-    bio: { type: String, default: "" },
-    experience: { type: [String], default: [] },
-    verified: { type: Boolean, default: false },
+    // isAdmin: { type: Boolean, required: true, default: false },
+    // skills: { type: [String], default: [] },
+    // bio: { type: String, default: "" },
+    // experience: { type: [String], default: [] },
+    // verified: { type: Boolean, default: false },
+    role:{type: String, enum: ['student', 'alumni', 'admin'], default: 'student'},
   },
   { timestamps: true }
 );
@@ -19,6 +20,7 @@ const userSchema = new mongoose.Schema(
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
 
+  // Hash the password and salt it
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
   next();
