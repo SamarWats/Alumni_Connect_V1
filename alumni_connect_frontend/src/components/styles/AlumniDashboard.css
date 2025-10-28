@@ -1,0 +1,228 @@
+.alumni-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f9fafb;
+  font-family: "Inter", sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 16rem;
+  background-color: #ffffff;
+  border-right: 1px solid #e5e7eb;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.sidebar-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+}
+
+.sidebar-name {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.sidebar-role {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar-link {
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  color: #374151;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.sidebar-link:hover {
+  background-color: #eff6ff;
+  color: #2563eb;
+}
+
+.sidebar-link.active {
+  background-color: #dbeafe;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* Dashboard Main */
+.dashboard-main {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.dashboard-title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+/* Grid Layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 2rem;
+}
+
+.cards-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 0.75rem;
+  padding: 1.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+.card-tag {
+  color: #2563eb;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.card-desc {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.25rem;
+}
+
+.card-btn {
+  margin-top: 1rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.card-btn:hover {
+  background-color: #1d4ed8;
+}
+
+/* Mentees */
+.mentees-section {
+  margin-top: 2rem;
+}
+
+.mentees-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.mentees-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.mentee-card {
+  background: #ffffff;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  text-align: center;
+  border: 1px solid #e5e7eb;
+}
+
+.mentee-avatar {
+  width: 6rem;
+  height: 6rem;
+  border-radius: 9999px;
+  object-fit: cover;
+  margin: 0 auto;
+}
+
+.mentee-name {
+  font-weight: 600;
+  margin-top: 1rem;
+}
+
+.mentee-course {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+/* Right Column */
+.right-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.status-card {
+  background: #ffffff;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid #e5e7eb;
+}
+
+.status-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.status-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.status-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  background: #dbeafe;
+  color: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+}
+
+.status-value {
+  color: #16a34a;
+  font-weight: 700;
+}
+
+.contribution-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.contribution-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
