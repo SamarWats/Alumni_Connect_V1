@@ -1,7 +1,30 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import "../components/styles/Home.css";
 
 const Home = () => {
+  const navigate = useNavigate();
+  const { isAuthenticated, user } = useAuth();
+
+  const handleGetStarted = () => {
+    if (isAuthenticated) {
+      // If logged in, go to dashboard based on role
+      if (user.role === 'student') {
+        navigate('/StudentDashboard');
+      } else if (user.role === 'alumni') {
+        navigate('/AlumniDashboard');
+      }
+    } else {
+      // If not logged in, go to register
+      navigate('/register');
+    }
+  };
+
+  const handleLogin = () => {
+    navigate('/login');
+  };
+
   return (
     <div className="home-container">
       {/* HEADER */}
@@ -27,7 +50,16 @@ const Home = () => {
             <a href="#">Events</a>
           </nav>
           <div className="header-button">
-            <button>Get Started</button>
+            {isAuthenticated ? (
+              <button onClick={handleGetStarted}>Dashboard</button>
+            ) : (
+              <>
+                <button onClick={handleLogin} className="btn-login">
+                  Login
+                </button>
+                <button onClick={handleGetStarted} className="btn-primary">Get Started</button>
+              </>
+            )}
           </div>
         </div>
       </header>
@@ -51,7 +83,9 @@ const Home = () => {
               Powered by AI, we match you with the right connections to
               accelerate your career.
             </p>
-            <button>Get Started</button>
+            <button onClick={handleGetStarted}>
+              {isAuthenticated ? 'Go to Dashboard' : 'Get Started'}
+            </button>
           </div>
         </section>
 
