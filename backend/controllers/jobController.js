@@ -153,24 +153,24 @@ exports.applyJob = async (req, res) => {
 };
 
 // get jobs posted by the logged-in alumni
-exports.myPostedJobs = async (req, res) => {
-    try {
-        // Fetch jobs posted by the logged-in user(alumni)
-        const jobs = await Job.find({ postedBy: req.user._id })
-            .populate("applicants", "name email role")
-            .sort({ createdAt: -1 });
+// exports.myPostedJobs = async (req, res) => {
+//     try {
+//         // Fetch jobs posted by the logged-in user(alumni)
+//         const jobs = await Job.find({ postedBy: req.user._id })
+//             .populate("applicants", "name email role")
+//             .sort({ createdAt: -1 });
 
 
-        // res.status(200).json({ jobs })
+//         // res.status(200).json({ jobs })
 
 
-        // Return the jobs, including job details, applicants, etc.
-        res.status(200).json({ jobs });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Server Error', error: error.message });
-    }
-};
+//         // Return the jobs, including job details, applicants, etc.
+//         res.status(200).json({ jobs });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ message: 'Server Error', error: error.message });
+//     }
+// };
 
 // Alumni can post the jobs
 // Students can apply for jobs
@@ -184,7 +184,7 @@ exports.myPostedJobs = async (req, res) => {
 exports.getMyPostedJobs = async (req, res) => {
   try {
     const jobs = await Job.find({ postedBy: req.user._id }).sort({ createdAt: -1 })
-    res.json(jobs)
+    res.json({ jobs }) 
   } catch (err) {
     res.status(500).json({ message: err.message })
   }

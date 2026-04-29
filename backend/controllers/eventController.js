@@ -2,9 +2,9 @@ const Event = require("../models/Event");
 const User = require("../models/User");
 const sendNotification = require("../utils/sendNotification");
 
-// ============================
+
 // 1. Create Event
-// ============================
+
 exports.createEvent = async (req, res) => {
   try {
     const { title, description, date, time, venue, bannerImage } = req.body;
@@ -42,9 +42,9 @@ exports.createEvent = async (req, res) => {
   }
 };
 
-// ============================
+
 // 2. Get All Events (with filters)
-// ============================
+
 exports.getAllEvents = async (req, res) => {
   try {
     const { status, creatorRole, date } = req.query;
@@ -68,9 +68,9 @@ exports.getAllEvents = async (req, res) => {
   }
 };
 
-// ============================
+
 // 3. Get Event by ID
-// ============================
+
 exports.getEventById = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id)
@@ -89,9 +89,9 @@ exports.getEventById = async (req, res) => {
   }
 };
 
-// ============================
+
 // 4. Update Event
-// ============================
+
 exports.updateEvent = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
@@ -121,9 +121,9 @@ exports.updateEvent = async (req, res) => {
   }
 };
 
-// ============================
+
 // 5. Delete Event
-// ============================
+
 exports.deleteEvent = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id);
@@ -151,9 +151,9 @@ exports.deleteEvent = async (req, res) => {
   }
 };
 
-// ============================
+
 // 6. Register for Event
-// ============================
+
 exports.registerForEvent = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id).populate("createdBy");
@@ -210,9 +210,9 @@ exports.registerForEvent = async (req, res) => {
   }
 };
 
-// ============================
+
 // 7. Get Registered Users
-// ============================
+
 exports.getRegisteredUsers = async (req, res) => {
   try {
     const event = await Event.findById(req.params.id).populate(

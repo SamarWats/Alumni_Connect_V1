@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Send, MessageSquare, Users } from "lucide-react"
+import { socket } from "@/lib/socket";
 
 interface ChatUser {
   _id: string
@@ -47,7 +48,7 @@ export default function ChatPage() {
           connectionAPI.getAll(),
         ])
         setChatUsers(chatRes.users || [])
-        
+
         // Extract connected users
         const connArray = Array.isArray(connRes) ? connRes : (connRes as any)?.connections || []
         const connectedUsers = connArray.map((conn: any) => {
@@ -77,6 +78,35 @@ export default function ChatPage() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
   }, [messages])
 
+  useEffect(() => {
+    if (user?._id) {
+      socket.emit("join", user._id);
+      console.log("Joined socket as:", user._id);
+    }
+  }, [user]);
+
+
+  // 🔥 Listen for incoming messages
+  useEffect(() => {
+    socket.on("new_message", (message) => {
+      console.log("📩 New message received:", message);
+
+      if (
+        selectedUser &&
+        (
+          (message.sender === user?._id && message.receiver === selectedUser._id) ||
+          (message.sender === selectedUser._id && message.receiver === user?._id)
+        )
+      ) {
+        setMessages((prev) => [...prev, message]);
+      }
+    });
+
+    return () => {
+      socket.off("new_message");
+    };
+  }, [selectedUser, user]);
+
   const fetchMessages = async (userId: string) => {
     try {
       const msgs = await chatAPI.getMessages(userId)
@@ -93,9 +123,9 @@ export default function ChatPage() {
     setSending(true)
     try {
       const msg = await chatAPI.sendMessage(selectedUser._id, newMessage)
-      setMessages([...messages, msg as Message])
+      setMessages((prev) => [...prev, msg as Message])
       setNewMessage("")
-      
+
       // Add to chat users if not already there
       if (!chatUsers.find(u => u._id === selectedUser._id)) {
         setChatUsers([...chatUsers, selectedUser])
@@ -145,11 +175,10 @@ export default function ChatPage() {
                     <button
                       key={chatUser._id}
                       onClick={() => setSelectedUser(chatUser)}
-                      className={`w-full flex items-center gap-3 p-3 rounded-lg transition-colors text-left ${
-                        selectedUser?._id === chatUser._id
-                          ? "bg-primary text-primary-foreground"
-                          : "hover:bg-muted"
-                      }`}
+                      className={`w-full flex items-center gap-3 p-3 rounded-lg transition-colors text-left ${selectedUser?._id === chatUser._id
+                        ? "bg-primary text-primary-foreground"
+                        : "hover:bg-muted"
+                        }`}
                     >
                       <Avatar className="h-10 w-10">
                         <AvatarFallback>{chatUser.name?.charAt(0)}</AvatarFallback>
@@ -198,11 +227,10 @@ export default function ChatPage() {
                         className={`flex ${msg.sender === user?._id ? "justify-end" : "justify-start"}`}
                       >
                         <div
-                          className={`max-w-[70%] rounded-lg px-4 py-2 ${
-                            msg.sender === user?._id
-                              ? "bg-primary text-primary-foreground"
-                              : "bg-muted"
-                          }`}
+                          className={`max-w-[70%] rounded-lg px-4 py-2 ${msg.sender === user?._id
+                            ? "bg-primary text-primary-foreground"
+                            : "bg-muted"
+                            }`}
                         >
                           <p>{msg.message}</p>
                           <p className={`text-xs mt-1 ${msg.sender === user?._id ? "text-primary-foreground/70" : "text-muted-foreground"}`}>

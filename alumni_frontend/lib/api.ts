@@ -9,6 +9,12 @@ import type {
   ProfileListResponse,
 } from "@/lib/types"
 
+import axios from "axios";
+
+const API = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+});
+
 // --------------------------------------
 // API CONFIG
 // --------------------------------------
@@ -241,3 +247,24 @@ export const searchAPI = {
       }
     }>(`/search?query=${encodeURIComponent(query)}`),
 }
+
+
+// Recommendation Jobs
+export const getRecommendedJobs = async (token: string) => {
+  const res = await API.get("/recommendations/jobs", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res.data;
+};
+
+// Recommendation Mentors
+export const getRecommendedMentors = async (token: string) => {
+  const res = await API.get("/recommendations/mentors", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  return res.data;
+};

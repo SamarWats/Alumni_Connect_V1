@@ -16,6 +16,7 @@ const searchRoutes = require("./routes/searchRoutes");
 const notificationRoutes = require("./routes/notificationRoutes");
 const chatRoutes = require("./routes/chatRoutes");
 const externalRoutes = require("./routes/externalRoutes");
+const recommendationRoutes = require("./routes/recommendationRoutes");
 
 const http = require("http");
 const { Server } = require("socket.io");
@@ -42,6 +43,7 @@ app.use("/api/search", searchRoutes);
 app.use("/api/notifications", notificationRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/external", externalRoutes);
+app.use("/api/recommendations", recommendationRoutes);
 
 // Create HTTP server
 const server = http.createServer(app);
